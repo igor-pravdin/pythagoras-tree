@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pythagoras Tree</title>
+    <style>
+        .app__controls {
+            position: absolute;
+            margin: 10px 10px 0;
+            z-index: 1;
+        }
+        .app__canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        function PythagorasTree(canvas) {
+            this.ctx = canvas.getContext("2d");
+            this.w = canvas.width;
+            this.h = canvas.height;
+            this.angle = -Math.PI / 6;
+            this.animation = null;
+        }
+
+        PythagorasTree.prototype.drawTree = function (x, y, direct, range, i) {
+            let newX = x + Math.cos(direct) * range;
+            let newY = y + Math.sin(direct) * range;
+
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(newX, newY);
+            this.ctx.stroke();
+
+            if (i > 0) {
+                this.drawTree(newX, newY, direct, range * 0.5, i - 1);
+                this.drawTree(newX, newY, direct + this.angle, range * 0.5, i - 1);
+                this.drawTree(newX, newY, direct - this.angle, range * 0.5, i - 1);
+            }
+        }
+
+        PythagorasTree.prototype.draw = function () {
+            this.ctx.clearRect(0, 0, this.w, this.h);
+            this.drawTree(this.w / 2, this.h / 2 + 350, -Math.PI / 2, 400, 9);
+            this.angle -= 0.025;
+            this.animation = window.requestAnimationFrame(this.draw.bind(this));
+        }
+
+        PythagorasTree.prototype.clear = function () {
+            window.cancelAnimationFrame(this.animation);
+            this.angle = -Math.PI / 6;
+            this.ctx.clearRect(0, 0, this.w, this.h);
+        }
+
+        PythagorasTree.prototype.stop = function () {
+            window.cancelAnimationFrame(this.animation);
+        }
+
+        PythagorasTree.init = function () {
+            const startBtn = document.getElementById('start-btn');
+            const stopBtn = document.getElementById('stop-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const canvas = document.getElementById("layer");
+
+            const tree = new PythagorasTree(canvas);
+
+            startBtn.addEventListener("click", () => tree.draw());
+            clearBtn.addEventListener("click", () => tree.clear());
+            stopBtn.addEventListener("click", () => tree.stop());
+
+            return tree;
+        }
+    </script>
+</head>
+<body>
+<div class="app">
+    <div class="app__controls">
+        <button id="start-btn" class="app__button app__button_start">start</button>
+        <button id="stop-btn" class="app__button app__button_stop">stop</button>
+        <button id="clear-btn" class="app__button app__button_clear">clear</button>
+    </div>
+    <canvas id="layer" class="app__canvas" height="1000" width="1000">
+        Your browser does not support the HTML canvas tag
+    </canvas>
+</div>
+<script>
+    PythagorasTree.init();
+</script>
+</body>
+</html>
