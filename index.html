@@ -32,9 +32,9 @@
             this.ctx.stroke();
 
             if (i > 0) {
-                this.drawTree(newX, newY, direct, range * 0.5, i - 1);
-                this.drawTree(newX, newY, direct + this.angle, range * 0.5, i - 1);
-                this.drawTree(newX, newY, direct - this.angle, range * 0.5, i - 1);
+                this.drawTree(newX, newY, direct, range /, i - 1);
+                this.drawTree(newX, newY, direct + this.angle, range / 2, i - 1);
+                this.drawTree(newX, newY, direct - this.angle, range / 2, i - 1);
             }
         }
 
@@ -46,9 +46,7 @@
         }
 
         PythagorasTree.prototype.start = function () {
-            if (!this.animation) {
-                this.draw();
-            }
+            this.animation || this.draw();
         }
 
         PythagorasTree.prototype.stop = function () {
@@ -62,7 +60,7 @@
             this.ctx.clearRect(0, 0, this.w, this.h);
         }
 
-        PythagorasTree.init = function () {
+        PythagorasTree.init = () => {
             const startBtn = document.getElementById('start-btn');
             const stopBtn = document.getElementById('stop-btn');
             const clearBtn = document.getElementById('clear-btn');
