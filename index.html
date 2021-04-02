@@ -32,7 +32,7 @@
             this.ctx.stroke();
 
             if (i > 0) {
-                this.drawTree(newX, newY, direct, range /, i - 1);
+                this.drawTree(newX, newY, direct, range / 2, i - 1);
                 this.drawTree(newX, newY, direct + this.angle, range / 2, i - 1);
                 this.drawTree(newX, newY, direct - this.angle, range / 2, i - 1);
             }
