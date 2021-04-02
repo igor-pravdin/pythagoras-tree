@@ -45,14 +45,21 @@
             this.animation = window.requestAnimationFrame(this.draw.bind(this));
         }
 
-        PythagorasTree.prototype.clear = function () {
-            window.cancelAnimationFrame(this.animation);
-            this.angle = -Math.PI / 6;
-            this.ctx.clearRect(0, 0, this.w, this.h);
+        PythagorasTree.prototype.start = function () {
+            if (!this.animation) {
+                this.draw();
+            }
         }
 
         PythagorasTree.prototype.stop = function () {
             window.cancelAnimationFrame(this.animation);
+            this.animation = null;
+        }
+
+        PythagorasTree.prototype.clear = function () {
+            this.stop();
+            this.angle = -Math.PI / 6;
+            this.ctx.clearRect(0, 0, this.w, this.h);
         }
 
         PythagorasTree.init = function () {
@@ -63,7 +70,7 @@
 
             const tree = new PythagorasTree(canvas);
 
-            startBtn.addEventListener("click", () => tree.draw());
+            startBtn.addEventListener("click", () => tree.start());
             clearBtn.addEventListener("click", () => tree.clear());
             stopBtn.addEventListener("click", () => tree.stop());
 
