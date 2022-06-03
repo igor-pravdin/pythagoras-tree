@@ -1,5 +1,5 @@
 # Pythagoras Tree
-Render Pythagoras Tree ([EXAMPLE](https://igor-pravdin.github.io/pythagoras-tree/))
+Render Pythagoras Tree ([EXAMPLE](https://ihor-pravdin.github.io/pythagoras-tree/))
 
 ![sample tree](tree.jpg)
 
